@@ -14,6 +14,7 @@ public class GameControllerScript : MonoBehaviour
     public Text superText;
 
     public GameObject enemy;
+    public GameObject restart;
 
     public bool isGameOver=false;
 
@@ -42,16 +43,18 @@ public class GameControllerScript : MonoBehaviour
         replayText.text = "";
         superText.text = "SuperAmmo: "+"0";
         isGameOver = false;
+        restart.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space) && isGameOver)
+        if (Input.touchCount==1 && isGameOver)
         {
             // 待完善，提示：可重新载入场景
-            SceneManager.LoadScene("MainScene", LoadSceneMode.Single);
 
+            //SceneManager.LoadScene("MainScene", LoadSceneMode.Single);
+            restart.SetActive(true);
         }
     }
 
@@ -79,7 +82,7 @@ public class GameControllerScript : MonoBehaviour
     }
     public void GameOver()
     {
-        replayText.text = "Click SPACE to replay!";
+        replayText.text = "You are dead!";
         isGameOver = true;
     }
 }

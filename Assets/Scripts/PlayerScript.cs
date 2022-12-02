@@ -45,8 +45,8 @@ public class PlayerScript : MonoBehaviour
             mousePositionInWorld.y=-4.5f;
         }
 
-        dx = Mathf.Lerp(transform.position.x, mousePositionInWorld.x, 0.05f);
-        dy = Mathf.Lerp(transform.position.y, mousePositionInWorld.y, 0.05f);
+        dx = Mathf.Lerp(transform.position.x, mousePositionInWorld.x, 0.2f);
+        dy = Mathf.Lerp(transform.position.y, mousePositionInWorld.y, 0.2f);
 
         transform.position = new Vector3(
             dx,
