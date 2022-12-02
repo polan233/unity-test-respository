@@ -21,12 +21,36 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float dx = Input.GetAxis("Horizontal") * Time.deltaTime * 8f;
-        float dy = Input.GetAxis("Vertical") * Time.deltaTime * 8f;
+
+        Vector3 mousePositionOnScreen = Input.GetTouch(0).position;
+        //Vector3 mousePositionOnScreen = Input.mousePosition;
+        Vector3 mousePositionInWorld = Camera.main.ScreenToWorldPoint(mousePositionOnScreen);
+        float dx, dy;
+        
+
+        if (mousePositionInWorld.x <= -8)
+        {
+            mousePositionInWorld.x = -8;
+        }
+        if (mousePositionInWorld.x >= 8)
+        {
+            mousePositionInWorld.x=8;
+        }
+        if (mousePositionInWorld.y >= 4.5)
+        {
+            mousePositionInWorld.y=4.5f;
+        }
+        if (mousePositionInWorld.y <= -4.5)
+        {
+            mousePositionInWorld.y=-4.5f;
+        }
+
+        dx = Mathf.Lerp(transform.position.x, mousePositionInWorld.x, 0.05f);
+        dy = Mathf.Lerp(transform.position.y, mousePositionInWorld.y, 0.05f);
 
         transform.position = new Vector3(
-            Mathf.Clamp(transform.position.x + dx, -8f, 8f),
-            Mathf.Clamp(transform.position.y + dy, -4.5f, 4.5f),
+            dx,
+            dy,
             0f
         );
         isGameOver = gameController.isGameOver;
@@ -41,7 +65,7 @@ public class PlayerScript : MonoBehaviour
     {
         while (!isGameOver)
         {
-            if (ammo>0&&Input.GetMouseButton(0))
+            if (ammo>0)
             {
                 ammo -= 1;
                 gameController.setAmmo(ammo);
